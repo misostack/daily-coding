@@ -10,7 +10,7 @@
 | Day | Date        | Status |
 | --- | ----------- | ------ |
 | 1   | 7 Mar 2026  | 🔥     |
-| 2   | 8 Mar 2026  |        |
+| 2   | 8 Mar 2026  | 🔥     |
 | 3   | 9 Mar 2026  |        |
 | 4   | 10 Mar 2026 |        |
 | 5   | 11 Mar 2026 |        |
@@ -38,3 +38,4 @@
 # Daily Coding App
 
 - [TTS App](./tts-app/)
+- [Testing](./testing)
