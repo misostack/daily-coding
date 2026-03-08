@@ -38,3 +38,41 @@ npm install --save-dev chai
 - Simulates real user scenarios and interactions.
 - Typically runs against a fully deployed application.
 - Example: Testing user login, navigation, and data submission in a web app.
+
+## Testing Methodologies
+
+### BDD
+
+BDD = Behavior Driven Development
+
+```
+Requirement → Behavior description → Automated test → Implementation
+```
+
+```md
+Given a user has an account
+When the user logs in with correct password
+Then the system returns a JWT token
+```
+
+Mocha itself is not a BDD framework.
+Mocha simply provides a BDD-style interface.
+
+```js
+describe("Login feature", () => {
+  describe("when password is correct", () => {
+    it("should return JWT token", () => {});
+  });
+});
+```
+
+| Aspect   | TDD              | BDD                |
+| -------- | ---------------- | ------------------ |
+| Focus    | Code correctness | System behavior    |
+| Audience | Developers       | Dev + business     |
+| Style    | Unit tests       | Behavior scenarios |
+| Syntax   | testAdd()        | should add numbers |
+| Language | technical        | human-readable     |
+
+- The BDD interface provides describe(), context(), it(), specify(), before(), after(), beforeEach(), and afterEach().
+- The TDD interface provides suite(), test(), suiteSetup(), suiteTeardown(), setup(), and teardown()
