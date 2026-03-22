@@ -4,7 +4,26 @@ from enum import Enum
 from datetime import date
 from typing_extensions import Literal, Annotated, Any
 
-app = FastAPI()
+openapi_tags = [
+    {
+        "name": "root",
+        "description": "Root endpoint for basic health checks and general information.",
+    },
+    {
+        "name": "dataset",
+        "description": "Manage specific items in the database.",
+        "externalDocs": {
+            "description": "Items external docs",
+            "url": "https://fastapi.tiangolo.com/tutorial/metadata/",
+        },
+    },
+    {
+        "name": "streaks",
+        "description": "Operations with streaks. The **streak** logic goes here.",
+    },
+]
+
+app = FastAPI(openapi_tags=openapi_tags)
 
 
 class FilterParams(BaseModel):
@@ -40,24 +59,24 @@ class StreakListResponse(BaseModel):
     pagination: PaginationParams
 
 
-@app.get("/", tags=["Root"])
+@app.get("/", tags=["root"])
 def read_root():
     return {"ping": "pong"}
 
 
-@app.get('/dataset/streaks/streak-statuses', tags=["Dataset"])
+@app.get('/dataset/streaks/streak-statuses', tags=["dataset"])
 def read_streak_statuses() -> list[StreakItemStatus]:
     return list(StreakItemStatus)
 
 
-@app.post('/{user_id}/streaks', tags=["Streaks"])
+@app.post('/{user_id}/streaks', tags=["streaks"])
 def create_streak_record(user_id: int, record: StreakRecord):
     record.user_id = user_id
     # Here you would typically save the record to a database
     return {"message": "Streak record created successfully", "record": record}
 
 
-@app.get('/{user_id}/streaks', tags=["Streaks"])
+@app.get('/{user_id}/streaks', tags=["streaks"])
 def get_streak_records(user_id: int, filter_query: Annotated[FilterParams, Query()]) -> StreakListResponse:
     # Here you would typically retrieve records from a database
     # For demonstration, we return a static list of records
@@ -74,7 +93,7 @@ def get_streak_records(user_id: int, filter_query: Annotated[FilterParams, Query
     }
 
 
-@app.get('/{user_id}/streaks/{streak_id}', tags=["Streaks"])
+@app.get('/{user_id}/streaks/{streak_id}', tags=["streaks"])
 def get_streak_record(user_id: int, streak_id: int) -> StreakRecord:
     # Here you would typically retrieve a specific record from a database
     # For demonstration, we return a static record
