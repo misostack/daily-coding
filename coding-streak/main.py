@@ -40,24 +40,24 @@ class StreakListResponse(BaseModel):
     pagination: PaginationParams
 
 
-@app.get("/")
+@app.get("/", tags=["Root"])
 def read_root():
     return {"ping": "pong"}
 
 
-@app.get('/dataset/streaks/streak-statuses')
+@app.get('/dataset/streaks/streak-statuses', tags=["Dataset"])
 def read_streak_statuses() -> list[StreakItemStatus]:
     return list(StreakItemStatus)
 
 
-@app.post('/{user_id}/streaks')
+@app.post('/{user_id}/streaks', tags=["Streaks"])
 def create_streak_record(user_id: int, record: StreakRecord):
     record.user_id = user_id
     # Here you would typically save the record to a database
     return {"message": "Streak record created successfully", "record": record}
 
 
-@app.get('/{user_id}/streaks')
+@app.get('/{user_id}/streaks', tags=["Streaks"])
 def get_streak_records(user_id: int, filter_query: Annotated[FilterParams, Query()]) -> StreakListResponse:
     # Here you would typically retrieve records from a database
     # For demonstration, we return a static list of records
@@ -74,7 +74,7 @@ def get_streak_records(user_id: int, filter_query: Annotated[FilterParams, Query
     }
 
 
-@app.get('/{user_id}/streaks/{streak_id}')
+@app.get('/{user_id}/streaks/{streak_id}', tags=["Streaks"])
 def get_streak_record(user_id: int, streak_id: int) -> StreakRecord:
     # Here you would typically retrieve a specific record from a database
     # For demonstration, we return a static record
